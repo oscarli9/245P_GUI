@@ -1,12 +1,10 @@
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
@@ -18,9 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -206,6 +202,61 @@ public class StudentRosterController implements Initializable {
         alert.show();
     }
 
+    private boolean save() {
+        boolean succeed = checkLegalChange();
+        boolean exist = false;
+        int existIndex = -1;
+        for (int i=0; i<studentList.size(); i++) {
+            if (studentList.get(i).getId().equals(idTextField.getText())) {
+                exist = true;
+                existIndex = i;
+            }
+        }
+        if (exist) {
+            if (succeed) {
+                setListItemInfo(studentList.get(existIndex));
+                chartBox.getChildren().clear();
+                chartBox.getChildren().addAll(setPieChart(studentList), setBarChart(studentList));
+            }
+        } else {
+            if (succeed) {
+                String gradeOption;
+                String honorStudentStatus;
+                if (lg.isSelected()) {
+                    gradeOption = "Letter Grade";
+                } else {
+                    gradeOption = "P/NP";
+                }
+                if (statusCheckBox.isSelected()) {
+                    honorStudentStatus = "Yes";
+                } else {
+                    honorStudentStatus = "No";
+                }
+                StudentInfo newStudent = new StudentInfo(
+                        idTextField.getText(),
+                        fnTextField.getText(),
+                        lnTextField.getText(),
+                        majorTextField.getText(),
+                        gradeList.getValue().toString(),
+                        gradeOption,
+                        honorStudentStatus,
+                        noteArea.getText(),
+                        currentUrl
+                );
+                studentList.add(newStudent);
+                currentIndex = studentList.size()-1;
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("New student added!");
+                alert.show();
+
+                chartBox.getChildren().clear();
+                chartBox.getChildren().addAll(setPieChart(studentList), setBarChart(studentList));
+            }
+        }
+        return succeed;
+    }
+
     private void setButtonHandler(Stage stage) {
         imageButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -258,56 +309,7 @@ public class StudentRosterController implements Initializable {
         saveChangeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                boolean exist = false;
-                int existIndex = -1;
-                for (int i=0; i<studentList.size(); i++) {
-                    if (studentList.get(i).getId().equals(idTextField.getText())) {
-                        exist = true;
-                        existIndex = i;
-                    }
-                }
-                if (exist) {
-                    if (checkLegalChange()) {
-                        setListItemInfo(studentList.get(existIndex));
-                        chartBox.getChildren().clear();
-                        chartBox.getChildren().addAll(setPieChart(studentList), setBarChart(studentList));
-                    }
-                } else {
-                    if (checkLegalChange()) {
-                        String gradeOption;
-                        String honorStudentStatus;
-                        if (lg.isSelected()) {
-                            gradeOption = "Letter Grade";
-                        } else {
-                            gradeOption = "P/NP";
-                        }
-                        if (statusCheckBox.isSelected()) {
-                            honorStudentStatus = "Yes";
-                        } else {
-                            honorStudentStatus = "No";
-                        }
-                        StudentInfo newStudent = new StudentInfo(
-                                idTextField.getText(),
-                                fnTextField.getText(),
-                                lnTextField.getText(),
-                                majorTextField.getText(),
-                                gradeList.getValue().toString(),
-                                gradeOption,
-                                honorStudentStatus,
-                                noteArea.getText(),
-                                currentUrl
-                        );
-                        studentList.add(newStudent);
-                        currentIndex = studentList.size()-1;
-
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setContentText("New student added!");
-                        alert.show();
-
-                        chartBox.getChildren().clear();
-                        chartBox.getChildren().addAll(setPieChart(studentList), setBarChart(studentList));
-                    }
-                }
+                save();
             }
         });
 
@@ -334,28 +336,93 @@ public class StudentRosterController implements Initializable {
 
     private void createMenu(Stage stage) {
         newMenuItem.setOnAction(actionEvent -> Platform.runLater(() -> {
-            try {
-                new StudentRoster().start(new Stage());
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            if (currentIndex >= 0 && currentIndex < studentList.size()) {
+                String fileName = idTextField.getText() + "_" + fnTextField.getText() + "_" + lnTextField.getText() + ".txt";
+                File fout = new File(fileName);
+                boolean find = false;
+                StudentInfo student = null;
+
+                try {
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fout)));
+
+                    for (StudentInfo studentInfo : studentList) {
+                        if (idTextField.getText().equals(studentInfo.getId())) {
+                            find = true;
+                            student = studentInfo;
+                        }
+                    }
+                    if (find) {
+                        bufferedWriter.write(student.getId());
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(student.getFirstName());
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(student.getLastName());
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(student.getMajor());
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(student.getCurrentGrade());
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(student.getGradeOption());
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(student.getHonorStatus());
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(student.getNote());
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(student.getPhotoSrc());
+                        bufferedWriter.flush();
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setContentText("File Created!");
+                        alert.showAndWait();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setContentText("File Creation Failed!");
+                        alert.showAndWait();
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }));
 
         openMenuItem.setOnAction(actionEvent -> Platform.runLater(() -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialDirectory(new File("/Users/oscarli/IdeaProjects/Fall2019/245P_E2_StudentRoster/photos"));
-            fileChooser.setTitle("Choose Image...");
+            fileChooser.setInitialDirectory(new File("/Users/oscarli/IdeaProjects/Fall2019/245P_E3_ApplyingFXMLToE2"));
+            fileChooser.setTitle("Choose Text File...");
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                    new FileChooser.ExtensionFilter("GIF", "*.gif"),
-                    new FileChooser.ExtensionFilter("BMP", "*.bmp"),
-                    new FileChooser.ExtensionFilter("PNG", "*.png"),
-                    new FileChooser.ExtensionFilter("All Images", "*.*")
+                    new FileChooser.ExtensionFilter("TXT", "*.txt"),
+                    new FileChooser.ExtensionFilter("All Files", "*.*")
             );
             File file = fileChooser.showOpenDialog(stage);
+            int index;
 
             try {
-                currentUrl = file.toURI().toURL().toString();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                idTextField.setText(bufferedReader.readLine());
+                for (int i=0; i<studentList.size(); i++) {
+                    if (studentList.get(i).getId().equals(idTextField.getText())) {
+                        index = i;
+                        currentIndex = index;
+                        break;
+                    }
+                }
+                fnTextField.setText(bufferedReader.readLine());
+                lnTextField.setText(bufferedReader.readLine());
+                majorTextField.setText(bufferedReader.readLine());
+                gradeList.setValue(bufferedReader.readLine());
+                String gradeOption = bufferedReader.readLine();
+                if (gradeOption.equals("Letter Grade")) {
+                    lg.setSelected(true);
+                    pn.setSelected(false);
+                } else {
+                    lg.setSelected(false);
+                    pn.setSelected(true);
+                }
+                String status = bufferedReader.readLine();
+                if (status.equals("Yes")) statusCheckBox.setSelected(true);
+                else statusCheckBox.setSelected(false);
+                noteArea.setText(bufferedReader.readLine());
+                currentUrl = bufferedReader.readLine();
                 Image image = new Image(currentUrl, 240, 320, true, true);
                 imageView.setImage(image);
             } catch (Exception ex) {
@@ -364,41 +431,114 @@ public class StudentRosterController implements Initializable {
         }));
 
         saveMenuItem.setOnAction(actionEvent -> Platform.runLater(() -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save Image");
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("JPG", "*.jpg")
-            );
+            if (save()) {
+                if (currentIndex >= 0 && currentIndex < studentList.size()) {
+                    String fileName = idTextField.getText() + "_" + fnTextField.getText() + "_" + lnTextField.getText() + ".txt";
+                    File fout = new File(fileName);
+                    boolean existBefore = fout.delete();
+                    boolean find = false;
+                    StudentInfo student = null;
 
-            File file = fileChooser.showSaveDialog(stage);
-            if (file != null) {
-                try {
-                    ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(),
-                            null), "jpg", file);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                    try {
+                        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fout)));
+
+                        for (StudentInfo studentInfo : studentList) {
+                            if (idTextField.getText().equals(studentInfo.getId())) {
+                                find = true;
+                                student = studentInfo;
+                            }
+                        }
+                        if (find) {
+                            bufferedWriter.write(student.getId());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getFirstName());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getLastName());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getMajor());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getCurrentGrade());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getGradeOption());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getHonorStatus());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getNote());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getPhotoSrc());
+                            bufferedWriter.flush();
+
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            if (existBefore) alert.setContentText("File Saved!");
+                            else alert.setContentText("File Created!");
+                            alert.showAndWait();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            if (existBefore) alert.setContentText("File Save Failed!");
+                            else alert.setContentText("File Creation Failed!");
+                            alert.showAndWait();
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         }));
 
         saveAsMenuItem.setOnAction(actionEvent -> Platform.runLater(() -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save Image");
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                    new FileChooser.ExtensionFilter("GIF", "*.gif"),
-                    new FileChooser.ExtensionFilter("BMP", "*.bmp"),
-                    new FileChooser.ExtensionFilter("PNG", "*.png"),
-                    new FileChooser.ExtensionFilter("All Images", "*.*")
-            );
+            if (save()) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setInitialDirectory(new File("/Users/oscarli/IdeaProjects/Fall2019/245P_E3_ApplyingFXMLToE2"));
+                fileChooser.setTitle("Save Text File As");
+                fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("TXT", "*.txt"),
+                        new FileChooser.ExtensionFilter("All Files", "*.*")
+                );
+                boolean find = false;
+                StudentInfo student = null;
 
-            File file = fileChooser.showSaveDialog(stage);
-            if (file != null) {
-                try {
-                    ImageIO.write(SwingFXUtils.fromFXImage(imageView.getImage(),
-                            null), "jpg", file);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                File file = fileChooser.showSaveDialog(stage);
+                if (file != null) {
+                    try {
+                        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+
+                        for (StudentInfo studentInfo : studentList) {
+                            if (idTextField.getText().equals(studentInfo.getId())) {
+                                find = true;
+                                student = studentInfo;
+                            }
+                        }
+                        if (find) {
+                            bufferedWriter.write(student.getId());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getFirstName());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getLastName());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getMajor());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getCurrentGrade());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getGradeOption());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getHonorStatus());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getNote());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(student.getPhotoSrc());
+                            bufferedWriter.flush();
+
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setContentText("File Created!");
+                            alert.showAndWait();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setContentText("File Creation Failed!");
+                            alert.showAndWait();
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         }));
