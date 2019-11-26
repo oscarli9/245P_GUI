@@ -1,6 +1,5 @@
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -360,6 +359,8 @@ public class StudentRoster extends Application {
             @Override
             public void handle(ActionEvent event) {
                 studentList.remove(currentIndex);
+                chartBox.getChildren().clear();
+                chartBox.getChildren().addAll(setPieChart(studentList), setBarChart(studentList));
 
                 try {
                     setCurrentInfo();
@@ -637,7 +638,7 @@ public class StudentRoster extends Application {
         });
         colGrade.setCellValueFactory(new PropertyValueFactory<>("currentGrade"));
 
-        TableColumn<StudentInfo, String> colGradeOption = new TableColumn<>("Current Option");
+        TableColumn<StudentInfo, String> colGradeOption = new TableColumn<>("Grade Option");
         colGradeOption.setCellFactory(ChoiceBoxTableCell.forTableColumn(FXCollections.observableArrayList("Letter Grade", "P/NP")));
         colGradeOption.setOnEditCommit((TableColumn.CellEditEvent<StudentInfo, String> event) -> {
             event.getRowValue().setGradeOption(event.getNewValue());
@@ -807,7 +808,7 @@ public class StudentRoster extends Application {
         titlePane1.setSpacing(20);
         titlePane1.setPrefWidth(600);
         titlePane1.setPrefHeight(100);
-        
+
         chartBox.setAlignment(Pos.CENTER);
         chartPane.setTop(anchorPaneTop1);
         chartTab.setContent(chartPane);
