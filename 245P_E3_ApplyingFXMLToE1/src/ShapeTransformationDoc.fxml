@@ -89,7 +89,7 @@
                               <ToggleGroup fx:id="colorGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="setBlue" mnemonicParsing="false" onAction="" text="Blue" toggleGroup="$colorGroup" />
+                        <RadioButton fx:id="setBlue" mnemonicParsing="false" text="Blue" toggleGroup="$colorGroup" />
                         <RadioButton fx:id="setGreen" mnemonicParsing="false" text="Green" toggleGroup="$colorGroup" />
                         <RadioButton fx:id="setRed" mnemonicParsing="false" text="Red" toggleGroup="$colorGroup" />
                         <RadioButton fx:id="setPurple" mnemonicParsing="false" text="Purple" toggleGroup="$colorGroup" />
