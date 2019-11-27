@@ -164,7 +164,7 @@
                                     <items>
                                       <MenuItem fx:id="newMenuItem" mnemonicParsing="false" text="Create a New File" />
                                           <MenuItem fx:id="openMenuItem" mnemonicParsing="false" text="Open an Existing File" />
-                                          <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save The Tile" />
+                                          <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save The File" />
                                           <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" text="Save The File As" />
                                           <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" text="Close The File" />
                                           <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" text="Exit The Application" />
@@ -174,11 +174,7 @@
                               </MenuBar>
                            </top>
                            <bottom>
-                              <ScrollPane prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                                 <content>
-                                    <TableView fx:id="studentInfoTable" editable="true" prefHeight="200.0" prefWidth="700.0" />
-                                 </content>
-                              </ScrollPane>
+                               <TableView fx:id="studentInfoTable" editable="true" prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
                            </bottom>
                         </BorderPane>
                      </top>
