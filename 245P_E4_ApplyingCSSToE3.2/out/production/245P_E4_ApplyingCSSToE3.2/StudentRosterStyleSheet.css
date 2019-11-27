@@ -1,0 +1,215 @@
+ScrollPane {
+    -fx-background-color: burlywood;
+}
+
+#scrollView {
+    -fx-background-color: burlywood;
+}
+
+Button {
+    -fx-font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-background-color: sienna;
+}
+
+.chart {
+    -fx-font-family: Impact, Charcoal, sans-serif;
+    -fx-font-size: 16px;
+}
+
+.chart-title {
+    -fx-font-size: 24px;
+}
+
+.chart-plot-background {
+    -fx-background-color: burlywood;
+}
+
+CheckBox {
+    -fx-font-family: Impact, Charcoal, sans-serif;
+    -fx-font-size: 16px;
+    -fx-text-alignment: center;
+}
+
+Label {
+    -fx-pref-height: 30px;
+    -fx-font-family: Impact, Charcoal, sans-serif;
+    -fx-font-size: 16px;
+}
+
+MenuBar {
+    -fx-font-family: Impact, Charcoal, sans-serif;
+    -fx-font-size: 16px;
+    -fx-background-color: sienna;
+}
+
+Rectangle {
+    -fx-arc-height: 10px;
+    -fx-arc-width: 10px;
+    -fx-stroke-width: 8px;
+}
+
+RadioButton {
+    -fx-font-family: Arial, Helvetica, sans-serif;
+}
+RadioButton:selected {
+    -fx-font-weight: bold;
+}
+
+.scroll-bar {
+    -fx-background-color: burlywood;
+}
+
+.scroll-bar:vertical .track {
+  visibility: hidden;
+}
+
+.scroll-bar:horizontal .track {
+  visibility: hidden;
+}
+
+.scroll-bar:vertical .thumb {
+  visibility: hidden;
+}
+
+.scroll-bar:horizontal .thumb {
+  visibility: hidden;
+}
+
+TableView {
+    -fx-background-color: antiquewhite;
+    -fx-border-color: burlywood;
+}
+
+.table-view .column-header{
+    -fx-background-color: burlywood;
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: burlywood;
+}
+
+.table-view .table-cell{
+    -fx-background-color: antiquewhite;
+    -fx-alignment:center;
+    -fx-font-family: Impact, Charcoal, sans-serif;
+    -fx-font-size: 15px;
+}
+
+Text {
+    -fx-stroke-type: outside;
+    -fx-stroke-width: 0px;
+}
+
+TextField {
+    -fx-pref-height: 30px;
+    -fx-font-family: Impact, Charcoal, sans-serif;
+    -fx-font-size: 16px;
+    -fx-background-color: antiquewhite;
+}
+
+TextArea {
+    -fx-font-family: Impact, Charcoal, sans-serif;
+    -fx-font-size: 16px;
+    -fx-padding: 10px;
+    -fx-pref-height:120px;
+    -fx-pref-width:180px;
+    -fx-background-color: burlywood;
+    -fx-control-inner-background: antiquewhite;
+    -fx-wrap-text: true;
+}
+
+#root {
+    -fx-background-color: burlywood;
+}
+
+#logoPane1 {
+    -fx-background-color: antiquewhite;
+    -fx-spacing: 20px;
+    -fx-alignment: top-center;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 100px;
+}
+
+#logoPane2 {
+    -fx-background-color: antiquewhite;
+    -fx-spacing: 20px;
+    -fx-alignment: top-center;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 100px;
+}
+
+#logoText1 {
+    -fx-fill: #a6bf18;
+}
+
+#logoText2 {
+    -fx-fill: #a6bf18;
+}
+
+#logoTitle1 {
+    -fx-padding: 5px;
+    -fx-font: 60px Arial;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#logoTitle2 {
+    -fx-padding: 5px;
+    -fx-font: 60px Arial;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#bigBox {
+    -fx-background-color: burlywood;
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+
+#gradeList {
+    -fx-pref-height: 30px;
+    -fx-background-color: sienna;
+}
+
+#goBox {
+    -fx-pref-height: 30px;
+    -fx-spacing: 5px;
+    -fx-padding: 5px;
+}
+
+#buttonBox {
+    -fx-spacing: 2px;
+    -fx-padding: 5px;
+    -fx-alignment: center;
+}
+
+#imageBox {
+    -fx-pref-width: 280px;
+}
+
+#labelBox {
+    -fx-spacing: 8px;
+    -fx-padding: 5px;
+    -fx-alignment: center-right;
+}
+
+#tableBox {
+    -fx-pref-width: 600px;
+    -fx-pref-height: 200px;
+}
+
+#textFieldBox {
+    -fx-padding: 10px;
+    -fx-spacing: 5px;
+    -fx-alignment: center-left;
+}
+
+#chartBox {
+    -fx-alignment: center;
+    -fx-pref-width: 600px;
+    -fx-spacing: 10px;
+    -fx-background-color: burlywood;
+}

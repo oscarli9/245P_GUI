@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane id="modePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentRosterController">
+  <tabs>
+    <Tab closable="false" text="Roster">
+         <content>
+            <BorderPane id="root">
+               <top>
+                  <AnchorPane BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox id="logoPane1" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <StackPane maxHeight="0.0" maxWidth="0.0">
+                                 <children>
+                                    <Rectangle fill="#1f93ff00" height="60.0" stroke="#acbdc2" strokeType="INSIDE" width="100.0">
+                                       <effect>
+                                          <Lighting specularExponent="10.0" surfaceScale="8.0">
+                                             <light>
+                                                <Light.Distant azimuth="225.0" />
+                                             </light>
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                          </Lighting>
+                                       </effect>
+                                    </Rectangle>
+                                    <Text id="logoText1" text="SR" StackPane.alignment="CENTER">
+                                       <font>
+                                          <Font name="Verdana Bold" size="45.0"/>
+                                       </font>
+                                       <effect>
+                                          <InnerShadow color="#6b6b6b" height="5.0" offsetX="1.0" offsetY="1.0" radius="3.25" width="10.0" />
+                                       </effect>
+                                    </Text>
+                                 </children>
+                                 <effect>
+                                    <Reflection fraction="0.5" topOpacity="0.7" />
+                                 </effect>
+                              </StackPane>
+                              <Text id="logoTitle1" fill="#6c3a3a" text="Student Roster">
+                                 <effect>
+                                    <Bloom threshold="0.8" />
+                                 </effect>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <bottom>
+                  <AnchorPane BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox id="buttonBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                           <children>
+                              <Button fx:id="newStudentButton" mnemonicParsing="false" text="New Student" textAlignment="CENTER" />
+                              <Button fx:id="deleteStudentButton" mnemonicParsing="false" text="Delete Student" textAlignment="CENTER" />
+                              <Button fx:id="saveChangeButton" mnemonicParsing="false" text="Save Changes" textAlignment="CENTER" />
+                              <Button fx:id="previousStudentButton" mnemonicParsing="false" text="&lt;&lt; Previous Student" textAlignment="CENTER" />
+                              <Button fx:id="nextStudentButton" mnemonicParsing="false" text="Next Student &gt;&gt;" textAlignment="CENTER" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </bottom>
+               <center>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <center>
+                        <ScrollPane id="scrollView" BorderPane.alignment="CENTER">
+                           <content>
+                              <VBox id="bigBox">
+                                 <children>
+                                    <HBox spacing="5.0">
+                                       <children>
+                                          <VBox id="labelBox" >
+                                             <children>
+                                                <Label text="ID Number" />
+                                                <Label text="First Name" />
+                                                <Label layoutX="10.0" layoutY="32.0" text="Last Name" />
+                                                <Label layoutX="10.0" layoutY="54.0" text="Major" />
+                                                <Label layoutX="10.0" layoutY="54.0" text="Current Grade" />
+                                                <Label layoutX="10.0" layoutY="98.0" text="Grade Option" />
+                                             </children>
+                                          </VBox>
+                                          <VBox id="textFieldBox">
+                                             <children>
+                                                <TextField fx:id="idTextField" />
+                                                <TextField fx:id="fnTextField" layoutX="10.0" layoutY="10.0" />
+                                                <TextField fx:id="lnTextField" layoutX="10.0" layoutY="42.0" />
+                                                <TextField fx:id="majorTextField" layoutX="10.0" layoutY="74.0" />
+                                                <ChoiceBox id="gradeList" fx:id="gradeList" />
+                                                <HBox id="goBox">
+                                                   <children>
+                                                      <RadioButton fx:id="lg" mnemonicParsing="false" text="Letter Grade">
+                                                         <toggleGroup>
+                                                            <ToggleGroup fx:id="goGroup" />
+                                                         </toggleGroup>
+                                                      </RadioButton>
+                                                      <RadioButton fx:id="pn" mnemonicParsing="false" text="P/NP" toggleGroup="$goGroup" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <CheckBox fx:id="statusCheckBox" mnemonicParsing="false" text="Honor Student" />
+                                    <TextArea fx:id="noteArea" promptText="Notes">
+                                    </TextArea>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </center>
+                     <right>
+                        <BorderPane id="imageBox" BorderPane.alignment="CENTER">
+                           <center>
+                              <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                           </center>
+                           <bottom>
+                              <StackPane BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="imageButton" mnemonicParsing="false" text="Choose an Image..." />
+                                 </children>
+                              </StackPane>
+                           </bottom>
+                        </BorderPane>
+                     </right>
+                     <top>
+                        <BorderPane BorderPane.alignment="CENTER">
+                           <top>
+                              <MenuBar BorderPane.alignment="CENTER">
+                                <menus>
+                                  <Menu mnemonicParsing="false" text="File">
+                                    <items>
+                                      <MenuItem fx:id="newMenuItem" mnemonicParsing="false" text="Create a New File" />
+                                          <MenuItem fx:id="openMenuItem" mnemonicParsing="false" text="Open an Existing File" />
+                                          <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save The File" />
+                                          <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" text="Save The File As" />
+                                          <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" text="Close The File" />
+                                          <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" text="Exit The Application" />
+                                    </items>
+                                  </Menu>
+                                </menus>
+                              </MenuBar>
+                           </top>
+                           <bottom>
+                              <TableView id="tableBox" BorderPane.alignment="CENTER" fx:id="studentInfoTable" editable="true" />
+                           </bottom>
+                        </BorderPane>
+                     </top>
+                  </BorderPane>
+               </center>
+            </BorderPane>
+         </content>
+    </Tab>
+    <Tab closable="false" text="Stat">
+         <content>
+            <BorderPane>
+               <top>
+                  <AnchorPane BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox id="logoPane2" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <StackPane maxHeight="0.0" maxWidth="0.0">
+                                 <children>
+                                    <Rectangle fill="#1f93ff00" height="60.0" stroke="#acbdc2" strokeType="INSIDE" width="100.0">
+                                       <effect>
+                                          <Lighting specularExponent="10.0" surfaceScale="8.0">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant azimuth="225.0" />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </Rectangle>
+                                    <Text id="logoText2" text="SR" StackPane.alignment="CENTER">
+                                       <effect>
+                                          <InnerShadow color="#6b6b6b" height="5.0" offsetX="1.0" offsetY="1.0" radius="3.25" width="10.0" />
+                                       </effect>
+                                       <font>
+                                          <Font name="Verdana Bold" size="45.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <effect>
+                                    <Reflection fraction="0.5" topOpacity="0.7" />
+                                 </effect>
+                              </StackPane>
+                              <Text id="logoTitle2" fill="#6c3a3a" text="Student Roster">
+                                 <effect>
+                                    <Bloom threshold="0.8" />
+                                 </effect>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <center>
+                  <ScrollPane BorderPane.alignment="CENTER">
+                     <content>
+                        <VBox id="chartBox" fx:id="chartBox">
+                           <children>
+                              <PieChart fx:id="pieChart" />
+                              <BarChart fx:id="barChart">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </BarChart>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+         </content>
+    </Tab>
+  </tabs>
+</TabPane>
