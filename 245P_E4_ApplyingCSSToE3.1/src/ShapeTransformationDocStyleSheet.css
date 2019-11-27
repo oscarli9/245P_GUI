@@ -1,0 +1,60 @@
+HBox {
+    -fx-background-color: Aquamarine;
+    -fx-padding: 5px;
+    -fx-spacing: 5px;
+    -fx-alignment: center;
+}
+
+VBox {
+    -fx-background-color: Aquamarine;
+    -fx-padding: 5px;
+    -fx-spacing: 5px;
+    -fx-alignment: center-left;
+}
+
+TitledPane {
+    -fx-background-color: yellow;
+    -fx-font-family: Courier;
+}
+
+Button {
+    -fx-font-family: Arial, Helvetica, sans-serif;
+    -fx-background-color: midnightblue;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+RadioButton {
+    -fx-font-family: Arial, Helvetica, sans-serif;
+}
+RadioButton:selected {
+    -fx-font-weight: bold;
+}
+
+Text {
+    -fx-font-family: Arial, Helvetica, sans-serif;
+}
+
+TextField {
+    -fx-alignment: center;
+}
+
+#root {
+    -fx-background-color: lightblue;
+}
+
+#ellipse {
+    -fx-stroke-width: 0px;
+}
+
+#myName {
+    -fx-font-family: Tahoma;
+    -fx-font-size: 20px;
+    -fx-fill: white;
+    -fx-text-alignment: center;
+}
+
+#controlBox {
+    -fx-background-color: lightblue;
+    -fx-alignment: top-center
+}

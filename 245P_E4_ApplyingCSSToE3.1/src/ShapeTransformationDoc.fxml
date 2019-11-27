@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="root" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ShapeTransformationController">
+   <center>
+      <StackPane prefHeight="400.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+         <children>
+            <Ellipse id="ellipse" fx:id="ellipse" onMousePressed="#ellipseOnMousePressedHandler" onMouseReleased="#ellipseOnMouseReleasedHandler" radiusX="50.0" radiusY="30.0" stroke="BLACK" strokeType="INSIDE" StackPane.alignment="CENTER" />
+            <Text id="myName" fx:id="myName" strokeType="OUTSIDE" text="Oscar">
+            </Text>
+         </children>
+      </StackPane>
+   </center>
+   <right>
+      <VBox id="controlBox" prefHeight="400.0" prefWidth="320.0" BorderPane.alignment="CENTER">
+         <children>
+            <TitledPane animated="false" text="Rotation">
+               <content>
+                  <HBox>
+                     <children>
+                        <Button fx:id="lRotateButton" mnemonicParsing="false" onAction="#lBtnHandler" text="Rotate Left" />
+                        <Button fx:id="rRotateButton" mnemonicParsing="false" onAction="#rBtnHandler" text="Rotate Right" />
+                     </children>
+                  </HBox>
+               </content>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TitledPane>
+            <TitledPane animated="false" text="Translation">
+               <content>
+                  <VBox>
+                     <children>
+                        <Text strokeType="OUTSIDE" text="Press WASD on the keyboard.">
+                        </Text>
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" text="Scaling">
+               <content>
+                  <VBox>
+                     <children>
+                        <Slider fx:id="scaleSlider" blockIncrement="0.1" majorTickUnit="0.2" max="2.0" min="0.2" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0">
+                        </Slider>
+                        <TextField fx:id="scaleTextField">
+                        </TextField>
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" text="Color">
+               <content>
+                  <HBox>
+                     <children>
+                        <RadioButton fx:id="setBlack" mnemonicParsing="false" selected="true" text="Black">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="colorGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="setBlue" mnemonicParsing="false" text="Blue" toggleGroup="$colorGroup" />
+                        <RadioButton fx:id="setGreen" mnemonicParsing="false" text="Green" toggleGroup="$colorGroup" />
+                        <RadioButton fx:id="setRed" mnemonicParsing="false" text="Red" toggleGroup="$colorGroup" />
+                        <RadioButton fx:id="setPurple" mnemonicParsing="false" text="Purple" toggleGroup="$colorGroup" />
+                     </children>
+                  </HBox>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" text="Reset">
+               <content>
+                  <VBox>
+                     <children>
+                        <Text strokeType="OUTSIDE" text="Click on the shape." />
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>
